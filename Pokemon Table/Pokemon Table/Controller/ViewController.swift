@@ -49,18 +49,18 @@ class ViewController: UIViewController {
     }
     
     func catchPokemon() {
-        self.networkManager.engagePokemon(poke_set: self.pokemonset){result in
+        self.networkManager.engagePokemon(poke_set: self.pokemonset){[weak self] result in
             switch result {
             case .success(let page):
-                self.pokemon_list.append(contentsOf: page.results)
+                self?.pokemon_list.append(contentsOf: page.results)
                 //self.nextPage = page.next ?? ""
                 DispatchQueue.main.async {
-                    self.PokemonTableView.reloadData()
+                    self?.PokemonTableView.reloadData()
                 }
                 
             case .failure(let err):
                 print("Error: \(err.localizedDescription)")
-                self.presentErrorAlert(title: "NetworkError", message: err.localizedDescription)
+                self?.presentErrorAlert(title: "NetworkError", message: err.localizedDescription)
             }
             
         }

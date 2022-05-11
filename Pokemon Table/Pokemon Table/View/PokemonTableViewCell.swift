@@ -112,7 +112,7 @@ class PokemonTableViewCell: UITableViewCell {
         reset()
         var title = ""
         self.nameLabel.text = poke_link.name
-        self.net_manager.pokemon_attributes(url_string: poke_link.url){result in
+        self.net_manager.pokemon_attributes(url_string: poke_link.url){[weak self] result in
             switch result {
             case .success(let poke):
                 for type in poke.types {
@@ -123,15 +123,15 @@ class PokemonTableViewCell: UITableViewCell {
                     return
                 }
 
-                self.net_manager.pokemon_image(url_string: pic_link){
+                self?.net_manager.pokemon_image(url_string: pic_link){ [weak self]
                     result in
                     
                     switch result {
                     case .success(let pic):
                         ImageCache.shared.setImageData(key: pic_link, data: pic)
                         DispatchQueue.main.async {
-                            self.pokemonImageView.image = UIImage(data: pic)
-                            self.typeLabel.text! += " " + title
+                            self?.pokemonImageView.image = UIImage(data: pic)
+                            self?.typeLabel.text! += " " + title
                         }
                         completion(poke)
                     case .failure(let err):

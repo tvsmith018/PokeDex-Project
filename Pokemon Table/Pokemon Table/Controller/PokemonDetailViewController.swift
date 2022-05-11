@@ -215,7 +215,6 @@ class PokemonDetailViewController: UIViewController {
             text += ability[i].ability.name + ", "
         }
         
-        print(text)
         self.abilities_poke.text = text
     }
     
